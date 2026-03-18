@@ -1,0 +1,529 @@
+date,keyword,query_combined,count
+2015-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",246
+2015-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",130
+2015-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",42
+2015-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",14
+2015-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",3
+2015-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",2
+2015-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",5
+2015-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",3
+2015-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",4
+2015-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",21
+2015-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",12
+2015-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",85
+2016-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",385
+2016-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",67
+2016-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",47
+2016-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",7
+2016-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",13
+2016-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",26
+2016-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",14
+2016-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",19
+2016-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",7
+2016-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",7
+2016-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",15
+2016-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",69
+2017-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",476
+2017-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",265
+2017-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",33
+2017-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",5
+2017-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",32
+2017-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",5
+2017-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",5
+2017-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",6
+2017-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",11
+2017-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",10
+2017-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",13
+2017-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",112
+2018-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",1082
+2018-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",201
+2018-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",40
+2018-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",57
+2018-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",22
+2018-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",36
+2018-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",33
+2018-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",38
+2018-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",43
+2018-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",34
+2018-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",25
+2018-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",252
+2019-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",1585
+2019-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",383
+2019-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",81
+2019-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",28
+2019-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",30
+2019-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",62
+2019-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",29
+2019-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",30
+2019-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",118
+2019-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",49
+2019-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",165
+2019-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",509
+2020-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",2409
+2020-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",658
+2020-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",150
+2020-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",70
+2020-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",46
+2020-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",24
+2020-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",26
+2020-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",19
+2020-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",25
+2020-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",48
+2020-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",106
+2020-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",440
+2021-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",3482
+2021-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",500
+2021-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",160
+2021-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",32
+2021-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",26
+2021-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",36
+2021-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",28
+2021-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",36
+2021-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",22
+2021-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",143
+2021-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",29
+2021-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",775
+2022-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",3107
+2022-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",703
+2022-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",144
+2022-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",53
+2022-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",78
+2022-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",53
+2022-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",66
+2022-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",40
+2022-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",51
+2022-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",146
+2022-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",91
+2022-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",639
+2023-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",4565
+2023-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",785
+2023-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",172
+2023-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",75
+2023-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",93
+2023-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",110
+2023-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",183
+2023-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",65
+2023-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",177
+2023-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",70
+2023-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",97
+2023-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",937
+2024-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",3480
+2024-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",735
+2024-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",115
+2024-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",242
+2024-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",85
+2024-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",62
+2024-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",119
+2024-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",62
+2024-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",66
+2024-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",149
+2024-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",120
+2024-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",610
+2025-01-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",4150
+2025-02-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",681
+2025-03-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",201
+2025-04-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",130
+2025-05-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",86
+2025-06-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",48
+2025-07-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",39
+2025-08-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",45
+2025-09-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",52
+2025-10-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",85
+2025-11-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",72
+2025-12-01,Dry January,"""Dry January"" OR ""janvier sans alcool"" OR ""detox alcool"" OR ""arrêter alcool""",621
+2015-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",61
+2015-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",92
+2015-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",183
+2015-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",49
+2015-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",129
+2015-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",80
+2015-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",74
+2015-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",96
+2015-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",75
+2015-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",358
+2015-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",149
+2015-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",72
+2016-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",71
+2016-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",169
+2016-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",192
+2016-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",179
+2016-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",134
+2016-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",82
+2016-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",89
+2016-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",89
+2016-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",137
+2016-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",98
+2016-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",92
+2016-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",80
+2017-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",225
+2017-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",207
+2017-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",353
+2017-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",160
+2017-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",272
+2017-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",209
+2017-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",223
+2017-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",184
+2017-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",124
+2017-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",172
+2017-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",191
+2017-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",115
+2018-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",223
+2018-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",204
+2018-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",370
+2018-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",173
+2018-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",205
+2018-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",157
+2018-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",216
+2018-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",130
+2018-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",109
+2018-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",253
+2018-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",54
+2018-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",110
+2019-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",195
+2019-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",283
+2019-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",379
+2019-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",213
+2019-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",225
+2019-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",179
+2019-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",168
+2019-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",127
+2019-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",165
+2019-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",249
+2019-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",189
+2019-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",155
+2020-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",157
+2020-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",149
+2020-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",197
+2020-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",154
+2020-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",136
+2020-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",155
+2020-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",122
+2020-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",167
+2020-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",317
+2020-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",367
+2020-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",191
+2020-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",200
+2021-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",174
+2021-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",323
+2021-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",393
+2021-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",158
+2021-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",211
+2021-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",225
+2021-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",195
+2021-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",127
+2021-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",252
+2021-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",206
+2021-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",433
+2021-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",179
+2022-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",247
+2022-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",165
+2022-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",333
+2022-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",148
+2022-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",221
+2022-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",363
+2022-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",460
+2022-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",349
+2022-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",405
+2022-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",338
+2022-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",285
+2022-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",231
+2023-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",312
+2023-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",414
+2023-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",671
+2023-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",406
+2023-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",256
+2023-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",247
+2023-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",229
+2023-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",189
+2023-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",179
+2023-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",162
+2023-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",183
+2023-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",133
+2024-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",218
+2024-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",277
+2024-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",489
+2024-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",297
+2024-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",243
+2024-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",232
+2024-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",248
+2024-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",205
+2024-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",189
+2024-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",214
+2024-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",221
+2024-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",175
+2025-01-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",215
+2025-02-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",268
+2025-03-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",595
+2025-04-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",308
+2025-05-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",219
+2025-06-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",234
+2025-07-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",178
+2025-08-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",138
+2025-09-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",269
+2025-10-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",248
+2025-11-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",215
+2025-12-01,Mars bleu,"""Mars bleu"" OR ""cancer colorectal"" OR ""dépistage colon"" OR ""coloscopie"" OR ""cancer colon""",134
+2015-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",155
+2015-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",154
+2015-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",121
+2015-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",120
+2015-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",187
+2015-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",102
+2015-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",92
+2015-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",91
+2015-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",141
+2015-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",430
+2015-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1515
+2015-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",407
+2016-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",268
+2016-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",315
+2016-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",210
+2016-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",129
+2016-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",146
+2016-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",192
+2016-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",149
+2016-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",423
+2016-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",307
+2016-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",326
+2016-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1132
+2016-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",327
+2017-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",233
+2017-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",174
+2017-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",187
+2017-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",182
+2017-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",176
+2017-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",219
+2017-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",199
+2017-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",178
+2017-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",288
+2017-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",348
+2017-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1341
+2017-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",443
+2018-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",162
+2018-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",193
+2018-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",247
+2018-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",219
+2018-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",158
+2018-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",181
+2018-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",206
+2018-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",145
+2018-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",115
+2018-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",603
+2018-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",849
+2018-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",406
+2019-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",251
+2019-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",198
+2019-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",197
+2019-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",405
+2019-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",153
+2019-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",250
+2019-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",139
+2019-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",260
+2019-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",360
+2019-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",617
+2019-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",2194
+2019-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",457
+2020-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",277
+2020-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",294
+2020-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",433
+2020-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",233
+2020-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",214
+2020-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",203
+2020-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",153
+2020-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",152
+2020-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",234
+2020-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",452
+2020-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1759
+2020-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",505
+2021-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",323
+2021-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",189
+2021-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",189
+2021-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",162
+2021-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",250
+2021-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",296
+2021-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",210
+2021-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",154
+2021-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",260
+2021-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",422
+2021-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1531
+2021-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",404
+2022-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",213
+2022-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",192
+2022-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",161
+2022-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",141
+2022-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",334
+2022-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",311
+2022-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",189
+2022-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",240
+2022-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",250
+2022-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",434
+2022-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1784
+2022-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",506
+2023-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",266
+2023-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",309
+2023-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",333
+2023-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",260
+2023-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",302
+2023-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",212
+2023-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",204
+2023-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",188
+2023-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",229
+2023-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",411
+2023-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",4277
+2023-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",369
+2024-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",190
+2024-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",260
+2024-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",163
+2024-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",229
+2024-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",262
+2024-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",277
+2024-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",203
+2024-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",220
+2024-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",174
+2024-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",362
+2024-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1836
+2024-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",298
+2025-01-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",153
+2025-02-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",158
+2025-03-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",135
+2025-04-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",140
+2025-05-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",426
+2025-06-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",171
+2025-07-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",124
+2025-08-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",151
+2025-09-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",183
+2025-10-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",460
+2025-11-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",1519
+2025-12-01,Movember,"""Movember"" OR ""cancer prostate"" OR ""dépistage prostate"" OR ""moustache movember""",320
+2015-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",232
+2015-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",404
+2015-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",453
+2015-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",246
+2015-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",213
+2015-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",222
+2015-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",161
+2015-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",205
+2015-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",356
+2015-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1350
+2015-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",434
+2015-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",203
+2016-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",274
+2016-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",326
+2016-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",245
+2016-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",211
+2016-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",237
+2016-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",259
+2016-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",276
+2016-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",247
+2016-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",372
+2016-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",946
+2016-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",310
+2016-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",124
+2017-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",318
+2017-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",543
+2017-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",464
+2017-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",506
+2017-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",444
+2017-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",500
+2017-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",287
+2017-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",296
+2017-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",403
+2017-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1093
+2017-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",429
+2017-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",383
+2018-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",637
+2018-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",460
+2018-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",575
+2018-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",334
+2018-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",428
+2018-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",767
+2018-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",373
+2018-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",352
+2018-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",382
+2018-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1206
+2018-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",179
+2018-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",321
+2019-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",334
+2019-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",675
+2019-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",509
+2019-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1382
+2019-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",481
+2019-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",526
+2019-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",457
+2019-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",379
+2019-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",965
+2019-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",2529
+2019-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",630
+2019-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",497
+2020-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",530
+2020-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",585
+2020-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",380
+2020-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",251
+2020-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",262
+2020-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",284
+2020-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",297
+2020-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",362
+2020-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",547
+2020-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1870
+2020-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",566
+2020-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",357
+2021-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",361
+2021-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",501
+2021-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",423
+2021-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",256
+2021-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",349
+2021-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",421
+2021-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",361
+2021-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",272
+2021-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",856
+2021-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",2949
+2021-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",691
+2021-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",316
+2022-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",343
+2022-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",453
+2022-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",466
+2022-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",367
+2022-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",428
+2022-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",491
+2022-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",287
+2022-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",552
+2022-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1090
+2022-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",4385
+2022-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1068
+2022-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",494
+2023-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",611
+2023-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",563
+2023-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1002
+2023-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",455
+2023-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",455
+2023-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",606
+2023-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1231
+2023-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",595
+2023-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",1065
+2023-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",2933
+2023-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",804
+2023-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",370
+2024-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",647
+2024-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",486
+2024-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",612
+2024-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",405
+2024-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",526
+2024-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",492
+2024-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",618
+2024-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",310
+2024-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",826
+2024-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",3575
+2024-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",788
+2024-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",458
+2025-01-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",669
+2025-02-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",529
+2025-03-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",464
+2025-04-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",420
+2025-05-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",379
+2025-06-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",448
+2025-07-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",304
+2025-08-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",297
+2025-09-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",789
+2025-10-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",3114
+2025-11-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",875
+2025-12-01,Octobre rose,"""Octobre rose"" OR ""cancer du sein"" OR ""mammographie"" OR ""ruban rose""",627
