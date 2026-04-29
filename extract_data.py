@@ -29,7 +29,7 @@ for campaign, query in CAMPAIGNS.items():
 
     for attempt in range(3):
         try:
-            pytrends.build_payload([query], timeframe="2005-01-01 2016-01-01", geo="FR")
+            pytrends.build_payload([query], timeframe="2005-01-01 2026-01-01", geo="FR")
             df = pytrends.interest_over_time().drop(columns=["isPartial"], errors="ignore")
             time.sleep(10)
 
@@ -37,7 +37,8 @@ for campaign, query in CAMPAIGNS.items():
                 raise ValueError("Aucune donnée renvoyée par Google Trends.")
 
             df.index = pd.to_datetime(df.index)
-            df = df.resample("MS").mean().round(1)
+            #df = df.resample("MS").mean().round(1) # resample mensuel (optionnel, selon la granularité souhaitée)
+            df = df.round(1)
 
             df_out = df.reset_index()
             df_out.columns = ["date", "interest"]
@@ -62,7 +63,7 @@ if monthly:
         col = df.columns[0]
         ax.plot(df.index, df[col], linewidth=2, label=campaign)
 
-    ax.set_title("Google Trends — Campagnes santé publique (FR) 2005–2016",
+    ax.set_title("Google Trends — Campagnes santé publique (FR) 2005–2026",
                  fontsize=13, fontweight="bold")
     ax.set_ylabel("Intérêt agrégé (0–100)")
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))

@@ -26,6 +26,6 @@ df_pivot = df_all.pivot(index="date", columns="campaign", values="interest")
 df_pivot = df_pivot.sort_index()
 
 # sauvegarde
-df_pivot.to_csv(OUTPUT_DIR / "monthly_campaigns_2005_2016.csv")
+df_pivot.to_csv(OUTPUT_DIR / "monthly_campaigns_2005_2026.csv")
 
 print("✅ Fichier combiné créé")
