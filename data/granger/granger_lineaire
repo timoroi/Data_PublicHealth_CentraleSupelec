@@ -1,0 +1,696 @@
+"""
+Granger Causality Analysis — MediaCloud + Google Trends
+- Utilise les fichiers MC normalisés par saison (_normalized.csv)
+- Lags ASYMÉTRIQUES : p1 (lags de la variable dépendante) et p2 (lags de la cause)
+  peuvent être différents — sélection par grille AIC 2D pour chaque direction
+- P-value GLOBALE (sur toutes les données) en plus du LOYO
+- Leave-one-year-out cross-validation
+- Tracé du R² (modèle complet vs réduit) pour chaque direction et chaque fold
+- Sorties nommées grangerlineaire_3105_*
+
+Formules :
+  GT → MC :  MC_t = Σ_{k=1}^{p1} α_k MC_{t-k}  +  Σ_{k=1}^{p2} β_k GT_{t-k}  + ε_t
+  MC → GT :  GT_t = Σ_{k=1}^{p1} α_k GT_{t-k}  +  Σ_{k=1}^{p2} β_k MC_{t-k}  + ε_t
+
+  H0 (test F) : β_1 = … = β_p2 = 0  (la cause n'apporte rien)
+  F = [(RSS_réduit − RSS_complet) / p2] / [RSS_complet / (n − p1 − p2 − 1)]
+
+  R²_réduit  = 1 − RSS_réduit  / TSS   (modèle sans la cause)
+  R²_complet = 1 − RSS_complet / TSS   (modèle avec la cause)
+  ΔR²        = R²_complet − R²_réduit  (gain dû à la cause)
+"""
+
+import os
+import itertools
+import warnings
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+from statsmodels.regression.linear_model import OLS
+from statsmodels.tools import add_constant
+
+warnings.filterwarnings("ignore")
+
+# ─────────────────────────────────────────────
+# CONFIG
+# ─────────────────────────────────────────────
+DATA_DIR   = "/Users/r/Documents/CS/projet_S8/data/google_trends/2904/GRANGER/VRAIES_DATA_JOURNALIERES_GRANGER"
+OUTPUT_DIR = Path(DATA_DIR).parent / "results_grangerlineaire_3105"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+MAX_LAG  = 10
+GC_ALPHA = 0.05
+TOPICS   = ["DJ", "MB", "Mov", "OR"]
+TOPIC_LABELS = {
+    "DJ":  "Dry January",
+    "MB":  "Mars Bleu",
+    "Mov": "Movember",
+    "OR":  "Octobre Rose",
+}
+
+# ─────────────────────────────────────────────
+# 1. CHARGEMENT
+# ─────────────────────────────────────────────
+def load_series(topic: str, data_dir: str) -> pd.DataFrame:
+    gt_path = os.path.join(data_dir, f"GT_{topic}_Granger.csv")
+    mc_path = os.path.join(data_dir, f"MC_{topic}_Granger_normalized.csv")
+
+    gt = (pd.read_csv(gt_path, parse_dates=["date"])
+            .set_index("date").sort_index()[["campaign_index"]]
+            .rename(columns={"campaign_index": "gt"}))
+    mc = (pd.read_csv(mc_path, parse_dates=["date"])
+            .set_index("date").sort_index()[["n_articles"]]
+            .rename(columns={"n_articles": "mc"}))
+
+    df = gt.join(mc, how="inner")
+    print(f"  Colonnes après join : {df.columns.tolist()}")
+    print(f"  Premières lignes :\n{df.head(5).to_string()}")
+    return df
+
+# ─────────────────────────────────────────────
+# 2. FOLD KEYS (saison pour DJ, année pour les autres)
+# ─────────────────────────────────────────────
+def get_fold_key(df: pd.DataFrame, topic: str, data_dir: str) -> pd.Series:
+    if topic == "DJ":
+        gt_path = os.path.join(data_dir, f"GT_{topic}_Granger.csv")
+        gt_meta = (pd.read_csv(gt_path, parse_dates=["date"])
+                     .set_index("date").sort_index()[["season"]])
+        return df.join(gt_meta, how="left")["season"]
+    return pd.Series(df.index.year, index=df.index, name="year")
+
+# ─────────────────────────────────────────────
+# 3. CONSTRUCTION DES MATRICES DE LAG ASYMÉTRIQUES
+#
+#  effect = variable dépendante (celle qu'on prédit)
+#  cause  = variable dont on teste l'influence
+#  p1     = nb de lags de l'effet  (partie autoregressive)
+#  p2     = nb de lags de la cause (partie testée)
+#
+#  On aligne sur p_max = max(p1, p2) pour que X_red et X_full
+#  portent exactement sur les mêmes instants temporels.
+# ─────────────────────────────────────────────
+def build_lag_matrix(
+    series: pd.DataFrame,
+    effect: str,
+    cause: str,
+    p1: int,
+    p2: int,
+):
+    """
+    Retourne (X_reduced, X_full, y) :
+      X_reduced : (N, p1)      — p1 lags de l'effet uniquement
+      X_full    : (N, p1+p2)   — p1 lags effet  ||  p2 lags cause
+      y         : (N,)
+    """
+    p_max = max(p1, p2)
+    df    = series[[effect, cause]].dropna()
+    T     = len(df)
+
+    y_list, eff_rows, cau_rows = [], [], []
+    for t in range(p_max, T):
+        y_list.append(df[effect].iloc[t])
+        eff_rows.append(df[effect].iloc[t - p1:t].values[::-1])  # lag 1..p1
+        cau_rows.append(df[cause].iloc[t - p2:t].values[::-1])   # lag 1..p2
+
+    y         = np.array(y_list)
+    X_reduced = np.array(eff_rows)
+    X_cause   = np.array(cau_rows)
+    X_full    = np.hstack([X_reduced, X_cause])
+    return X_reduced, X_full, y
+
+# ─────────────────────────────────────────────
+# 4. AIC D'UN MODÈLE OLS
+# ─────────────────────────────────────────────
+def aic_ols(X: np.ndarray, y: np.ndarray) -> float:
+    Xc  = add_constant(X, has_constant="add")
+    res = OLS(y, Xc).fit()
+    return res.aic
+
+# ─────────────────────────────────────────────
+# 5. SÉLECTION DE (p1, p2) PAR AIC — GRILLE 2D
+# ─────────────────────────────────────────────
+def select_lags_aic_2d(
+    series: pd.DataFrame,
+    effect: str,
+    cause: str,
+    max_lag: int,
+) -> tuple:
+    aic_grid = pd.DataFrame(
+        np.nan,
+        index   = range(1, max_lag + 1),
+        columns = range(1, max_lag + 1),
+    )
+    aic_grid.index.name   = "p1_effect"
+    aic_grid.columns.name = "p2_cause"
+
+    for p1, p2 in itertools.product(range(1, max_lag + 1), repeat=2):
+        try:
+            _, X_full, y = build_lag_matrix(series, effect, cause, p1, p2)
+            if len(y) < (p1 + p2) * 3 + 5:
+                continue
+            aic_grid.loc[p1, p2] = aic_ols(X_full, y)
+        except Exception:
+            pass
+
+    flat_min       = aic_grid.stack().idxmin()
+    p1_opt, p2_opt = int(flat_min[0]), int(flat_min[1])
+    return p1_opt, p2_opt, aic_grid
+
+# ─────────────────────────────────────────────
+# 6. TEST F DE GRANGER + R²
+# ─────────────────────────────────────────────
+def granger_ftest(
+    series: pd.DataFrame,
+    effect: str,
+    cause: str,
+    p1: int,
+    p2: int,
+) -> tuple:
+    X_red, X_full, y = build_lag_matrix(series, effect, cause, p1, p2)
+    n   = len(y)
+    TSS = np.sum((y - y.mean()) ** 2)
+
+    res_red  = OLS(y, add_constant(X_red,  has_constant="add")).fit()
+    res_full = OLS(y, add_constant(X_full, has_constant="add")).fit()
+
+    RSS_red  = res_red.ssr
+    RSS_full = res_full.ssr
+    df_num   = p2
+    df_den   = n - p1 - p2 - 1
+
+    if df_den <= 0 or TSS <= 0:
+        return np.nan, np.nan, np.nan, np.nan, np.nan
+
+    F_stat   = ((RSS_red - RSS_full) / df_num) / (RSS_full / df_den)
+    p_val    = 1.0 - stats.f.cdf(F_stat, df_num, df_den)
+    r2_red   = 1 - RSS_red  / TSS
+    r2_full  = 1 - RSS_full / TSS
+    delta_r2 = r2_full - r2_red
+    return F_stat, p_val, r2_red, r2_full, delta_r2
+
+# ─────────────────────────────────────────────
+# 7. P-VALUE GLOBALE (sans LOYO)
+# ─────────────────────────────────────────────
+def global_granger(df: pd.DataFrame, topic: str, lags: dict) -> dict:
+    result = {"topic": topic}
+    for effect, cause in [("mc", "gt"), ("gt", "mc")]:
+        direction = f"{cause}_to_{effect}"
+        p1, p2, _ = lags[(effect, cause)]
+        F, pval, r2_red, r2_full, dr2 = granger_ftest(df, effect, cause, p1, p2)
+        result[f"p1_{direction}"]       = p1
+        result[f"p2_{direction}"]       = p2
+        result[f"F_{direction}"]        = round(F,       4) if not np.isnan(F)       else np.nan
+        result[f"pval_{direction}"]     = round(pval,    6) if not np.isnan(pval)    else np.nan
+        result[f"r2_red_{direction}"]   = round(r2_red,  4) if not np.isnan(r2_red)  else np.nan
+        result[f"r2_full_{direction}"]  = round(r2_full, 4) if not np.isnan(r2_full) else np.nan
+        result[f"delta_r2_{direction}"] = round(dr2,     4) if not np.isnan(dr2)     else np.nan
+        result[f"sig_{direction}"]      = (not np.isnan(pval)) and (pval < GC_ALPHA)
+    return result
+
+# ─────────────────────────────────────────────
+# 8. GRANGER LOYO ASYMÉTRIQUE
+# ─────────────────────────────────────────────
+def granger_loyo(
+    df: pd.DataFrame,
+    topic: str,
+    data_dir: str,
+    lags: dict,
+    alpha: float = GC_ALPHA,
+) -> pd.DataFrame:
+    fold_keys = get_fold_key(df, topic, data_dir)
+    seasons   = sorted(fold_keys.dropna().unique())
+    rows      = []
+
+    for held_out in seasons:
+        mask_train = fold_keys != held_out
+        train      = df.loc[mask_train, ["gt", "mc"]].dropna()
+
+        if len(train) < MAX_LAG * 4:
+            print(f"  [SKIP] {held_out} : train trop court ({len(train)} obs)")
+            continue
+        if train["gt"].std() < 1e-3 or train["mc"].std() < 1e-3:
+            print(f"  [SKIP] {held_out} : variance quasi-nulle")
+            continue
+
+        row = {
+            "held_out": held_out,
+            "n_train":  len(train),
+            "gt_std":   round(train["gt"].std(), 3),
+            "mc_std":   round(train["mc"].std(), 3),
+        }
+
+        for effect, cause in [("mc", "gt"), ("gt", "mc")]:
+            direction = f"{cause}_to_{effect}"
+            p1, p2, _ = lags[(effect, cause)]
+            F, pval, r2_red, r2_full, dr2 = granger_ftest(train, effect, cause, p1, p2)
+
+            row[f"p1_{direction}"]       = p1
+            row[f"p2_{direction}"]       = p2
+            row[f"F_{direction}"]        = round(F,       4) if not np.isnan(F)       else np.nan
+            row[f"pval_{direction}"]     = round(pval,    6) if not np.isnan(pval)    else np.nan
+            row[f"r2_red_{direction}"]   = round(r2_red,  4) if not np.isnan(r2_red)  else np.nan
+            row[f"r2_full_{direction}"]  = round(r2_full, 4) if not np.isnan(r2_full) else np.nan
+            row[f"delta_r2_{direction}"] = round(dr2,     4) if not np.isnan(dr2)     else np.nan
+            row[f"sig_{direction}"]      = (not np.isnan(pval)) and (pval < alpha)
+
+        rows.append(row)
+
+    return pd.DataFrame(rows)
+
+# ─────────────────────────────────────────────
+# 9. VISUALISATIONS
+# ─────────────────────────────────────────────
+
+def plot_aic_heatmaps(lags_by_topic: dict) -> None:
+    """Heatmap AIC 2D (p1 × p2) pour chaque campagne et direction."""
+    fig, axes = plt.subplots(len(TOPICS), 2, figsize=(14, 5 * len(TOPICS)))
+    directions = [("mc", "gt", "GT → MC"), ("gt", "mc", "MC → GT")]
+
+    for row_i, topic in enumerate(TOPICS):
+        for col_j, (effect, cause, label) in enumerate(directions):
+            ax = axes[row_i, col_j]
+            p1_opt, p2_opt, aic_grid = lags_by_topic[topic][(effect, cause)]
+            data = aic_grid.values.astype(float)
+
+            im = ax.imshow(
+                data, aspect="auto", origin="lower", cmap="viridis_r",
+                extent=[0.5, aic_grid.columns.max() + 0.5,
+                        0.5, aic_grid.index.max()   + 0.5],
+            )
+            ax.scatter(p2_opt, p1_opt, color="red", s=200, marker="*",
+                       zorder=5, label=f"(p1*={p1_opt}, p2*={p2_opt})")
+            plt.colorbar(im, ax=ax, shrink=0.8, label="AIC")
+            ax.set_xlabel("p2 (lags cause)", fontsize=9)
+            ax.set_ylabel("p1 (lags effet)", fontsize=9)
+            ax.set_title(
+                f"{TOPIC_LABELS[topic]} — {label}\n"
+                f"AIC optimal : p1*={p1_opt}, p2*={p2_opt}",
+                fontsize=9,
+            )
+            ax.legend(fontsize=8)
+
+    plt.suptitle(
+        "Sélection des lags (p1, p2) par AIC — Grille 2D\n"
+        "p1 = lags de la variable dépendante  |  p2 = lags de la cause\n"
+        "Étoile rouge = optimum",
+        fontsize=12,
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "grangerlineaire_3105_aic_heatmaps.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+def plot_loyo_pvalues(loyo_by_topic: dict) -> None:
+    """P-values Granger par fold LOYO. Points cerclés = significatifs."""
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+    for ax, topic in zip(axes.flatten(), TOPICS):
+        res = loyo_by_topic[topic]
+        if res.empty:
+            ax.set_visible(False)
+            continue
+
+        x      = np.arange(len(res))
+        labels = res["held_out"].astype(str).tolist()
+        pv_gt  = res["pval_gt_to_mc"].values
+        pv_mc  = res["pval_mc_to_gt"].values
+
+        ax.plot(x, pv_gt, marker="o", label="GT → MC",
+                color="steelblue", linewidth=1.5, zorder=3)
+        ax.plot(x, pv_mc, marker="s", label="MC → GT",
+                color="tomato", linewidth=1.5, zorder=3)
+
+        for i, (pg, pm) in enumerate(zip(pv_gt, pv_mc)):
+            if not np.isnan(pg) and pg < GC_ALPHA:
+                ax.scatter(i, pg, color="steelblue", s=120, zorder=5,
+                           edgecolors="navy", linewidths=1.5)
+            if not np.isnan(pm) and pm < GC_ALPHA:
+                ax.scatter(i, pm, color="tomato", s=120, zorder=5,
+                           edgecolors="darkred", linewidths=1.5)
+
+        ax.axhline(GC_ALPHA, color="gray", linestyle="--",
+                   linewidth=1.2, label=f"α = {GC_ALPHA}")
+
+        p1_gt  = res["p1_gt_to_mc"].iloc[0]
+        p2_gt  = res["p2_gt_to_mc"].iloc[0]
+        p1_mc  = res["p1_mc_to_gt"].iloc[0]
+        p2_mc  = res["p2_mc_to_gt"].iloc[0]
+        pct_gt = res["sig_gt_to_mc"].mean() * 100
+        pct_mc = res["sig_mc_to_gt"].mean() * 100
+
+        ax.set_title(
+            f"{TOPIC_LABELS[topic]}  "
+            f"[GT→MC : p1={p1_gt}, p2={p2_gt}  |  MC→GT : p1={p1_mc}, p2={p2_mc}]\n"
+            f"GT→MC : {pct_gt:.0f}% sig.  |  MC→GT : {pct_mc:.0f}% sig.",
+            fontsize=8,
+        )
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
+        ax.set_xlabel("Saison retirée (fold LOYO)")
+        ax.set_ylabel("p-value (test F de Granger)")
+        ax.set_ylim(-0.02, 1.05)
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+
+    plt.suptitle(
+        "Causalité de Granger LINÉAIRE (lags asymétriques p1 ≠ p2) — p-values LOYO\n"
+        "Points cerclés = significatifs (p < 0.05)  |  Sélection AIC 2D",
+        fontsize=12,
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "grangerlineaire_3105_loyo_pvalues.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+def plot_loyo_r2(loyo_by_topic: dict) -> None:
+    """
+    R² par fold LOYO : réduit vs complet, avec ΔR² en barres (axe droit).
+    Une figure par direction (GT→MC et MC→GT).
+    Fond rouge clair = fold significatif (p < 0.05).
+    """
+    for effect, cause, label, fname_suffix in [
+        ("mc", "gt", "GT → MC", "gt_to_mc"),
+        ("gt", "mc", "MC → GT", "mc_to_gt"),
+    ]:
+        direction = f"{cause}_to_{effect}"
+        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+        for ax, topic in zip(axes.flatten(), TOPICS):
+            res = loyo_by_topic[topic]
+            if res.empty:
+                ax.set_visible(False)
+                continue
+
+            x      = np.arange(len(res))
+            labels = res["held_out"].astype(str).tolist()
+
+            r2_red  = res[f"r2_red_{direction}"].values
+            r2_full = res[f"r2_full_{direction}"].values
+            dr2     = res[f"delta_r2_{direction}"].values
+
+            ax.plot(x, r2_red,  marker="o", label="R² réduit (sans cause)",
+                    color="gray", linewidth=1.5, linestyle="--", zorder=3)
+            ax.plot(x, r2_full, marker="s", label="R² complet (avec cause)",
+                    color="steelblue", linewidth=1.5, zorder=3)
+
+            # ΔR² en barres sur axe droit
+            ax2 = ax.twinx()
+            ax2.bar(x, dr2, alpha=0.25, color="green", zorder=2, label="ΔR²")
+            ax2.set_ylabel("ΔR²", fontsize=8, color="green")
+            ax2.tick_params(axis="y", labelcolor="green", labelsize=7)
+            dr2_max = np.nanmax(np.abs(dr2)) if not np.all(np.isnan(dr2)) else 0.1
+            ax2.set_ylim(-dr2_max * 0.5, dr2_max * 2.5)
+
+            # Fond rouge clair pour les folds significatifs
+            sig_mask = res[f"sig_{direction}"].values
+            for i, sig in enumerate(sig_mask):
+                if sig:
+                    ax.axvspan(i - 0.4, i + 0.4, alpha=0.08,
+                               color="tomato", zorder=1)
+
+            p1       = res[f"p1_{direction}"].iloc[0]
+            p2       = res[f"p2_{direction}"].iloc[0]
+            mean_dr2 = np.nanmean(dr2)
+
+            ax.set_title(
+                f"{TOPIC_LABELS[topic]} — {label}  [p1={p1}, p2={p2}]\n"
+                f"ΔR² moyen = {mean_dr2:.4f}  (fond rouge = fold sig. p<0.05)",
+                fontsize=8,
+            )
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
+            ax.set_xlabel("Saison retirée (fold LOYO)")
+            ax.set_ylabel("R²", fontsize=9)
+            ax.set_ylim(-0.05, 1.05)
+            ax.grid(alpha=0.3, zorder=0)
+
+            # Légendes combinées des deux axes
+            lines1, labs1 = ax.get_legend_handles_labels()
+            lines2, labs2 = ax2.get_legend_handles_labels()
+            ax.legend(lines1 + lines2, labs1 + labs2, fontsize=7, loc="upper left")
+
+        plt.suptitle(
+            f"R² LOYO — direction {label}\n"
+            "Gris pointillé = R² sans cause  |  Bleu = R² avec cause  |  "
+            "Vert = ΔR²  |  Fond rouge = fold significatif (p < 0.05)",
+            fontsize=11,
+        )
+        plt.tight_layout()
+        out = OUTPUT_DIR / f"grangerlineaire_3105_loyo_r2_{fname_suffix}.png"
+        plt.savefig(out, dpi=150)
+        plt.close()
+        print(f"  → {out}")
+
+
+def plot_global_summary(global_results: list) -> None:
+    """
+    Deux sous-figures :
+      (a) p-values globales — barplot avec seuil α
+      (b) R² global — réduit vs complet par campagne × direction
+    """
+    df_g    = pd.DataFrame(global_results).set_index("topic")
+    topics  = TOPICS
+    x       = np.arange(len(topics))
+    width   = 0.35
+    xlabels = [TOPIC_LABELS[t] for t in topics]
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    # (a) p-values globales
+    ax = axes[0]
+    pv_gt = [df_g.loc[t, "pval_gt_to_mc"] for t in topics]
+    pv_mc = [df_g.loc[t, "pval_mc_to_gt"] for t in topics]
+
+    ax.bar(x - width / 2, pv_gt, width, label="GT → MC",
+           color="steelblue", alpha=0.85)
+    ax.bar(x + width / 2, pv_mc, width, label="MC → GT",
+           color="tomato", alpha=0.85)
+    ax.axhline(GC_ALPHA, color="black", linestyle="--",
+               linewidth=1.5, label=f"α = {GC_ALPHA}")
+
+    for i, topic in enumerate(topics):
+        for offset, direction in [(-width / 2, "gt_to_mc"), (width / 2, "mc_to_gt")]:
+            p1 = df_g.loc[topic, f"p1_{direction}"]
+            p2 = df_g.loc[topic, f"p2_{direction}"]
+            pv = df_g.loc[topic, f"pval_{direction}"]
+            ypos = float(pv) + 0.03 if not np.isnan(pv) else 0.5
+            ax.text(i + offset, min(ypos, 0.95),
+                    f"p1={p1}\np2={p2}", ha="center", fontsize=6)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(xlabels, fontsize=9)
+    ax.set_ylabel("p-value globale (test F)")
+    ax.set_ylim(0, 1.1)
+    ax.set_title("P-values GLOBALES (sans LOYO)", fontsize=10)
+    ax.legend(fontsize=9)
+    ax.grid(alpha=0.3, axis="y")
+
+    # (b) R² global : 4 barres par campagne
+    ax2   = axes[1]
+    w     = 0.18
+    offs  = [-3 * w / 2, -w / 2, w / 2, 3 * w / 2]
+    cols  = ["#aec6e8", "#1f77b4", "#f4a582", "#d62728"]
+    legs  = ["R² réduit GT→MC", "R² complet GT→MC",
+             "R² réduit MC→GT", "R² complet MC→GT"]
+    keys  = ["r2_red_gt_to_mc", "r2_full_gt_to_mc",
+             "r2_red_mc_to_gt", "r2_full_mc_to_gt"]
+
+    for idx, key in enumerate(keys):
+        vals = [df_g.loc[t, key] for t in topics]
+        ax2.bar(x + offs[idx], vals, w,
+                color=cols[idx], alpha=0.85, label=legs[idx])
+
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(xlabels, fontsize=9)
+    ax2.set_ylabel("R²")
+    ax2.set_ylim(0, 1.0)
+    ax2.set_title("R² GLOBAL — réduit vs complet (sans LOYO)", fontsize=10)
+    ax2.legend(fontsize=7)
+    ax2.grid(alpha=0.3, axis="y")
+
+    plt.suptitle(
+        "Granger Linéaire — Résultats GLOBAUX (lags asymétriques, AIC 2D)",
+        fontsize=12,
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "grangerlineaire_3105_global_summary.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+def plot_normalized_series(dfs_by_topic: dict) -> None:
+    """Superposition GT et MC normalisés [0–100] par saison."""
+    fig, axes = plt.subplots(4, 1, figsize=(15, 18))
+    for ax, topic in zip(axes, TOPICS):
+        df = dfs_by_topic[topic]
+        ax.plot(df.index, df["gt"], label="Google Trends",
+                linewidth=0.9, alpha=0.9, color="steelblue")
+        ax.plot(df.index, df["mc"], label="MediaCloud (normalisé)",
+                linewidth=0.9, alpha=0.9, color="tomato")
+        ax.set_title(TOPIC_LABELS[topic], fontsize=11)
+        ax.set_ylabel("[0 – 100]")
+        ax.legend(loc="upper right", fontsize=8)
+        ax.grid(alpha=0.2)
+    plt.suptitle("GT vs MC — tous deux normalisés [0–100] par saison", fontsize=13)
+    plt.tight_layout()
+    out = OUTPUT_DIR / "grangerlineaire_3105_normalized_series.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+def plot_summary_heatmap(loyo_by_topic: dict, global_results: list) -> None:
+    """Heatmap double : % LOYO sig. (gauche) et p-values globales (droite)."""
+    df_g = pd.DataFrame(global_results).set_index("topic")
+
+    loyo_data = {
+        TOPIC_LABELS[t]: {
+            "GT→MC % LOYO": round(loyo_by_topic[t]["sig_gt_to_mc"].mean() * 100, 1),
+            "MC→GT % LOYO": round(loyo_by_topic[t]["sig_mc_to_gt"].mean() * 100, 1),
+        }
+        for t in TOPICS if not loyo_by_topic[t].empty
+    }
+    df_loyo = pd.DataFrame(loyo_data).T
+
+    pval_data = pd.DataFrame({
+        "GT→MC (p globale)": [df_g.loc[t, "pval_gt_to_mc"] for t in TOPICS],
+        "MC→GT (p globale)": [df_g.loc[t, "pval_mc_to_gt"] for t in TOPICS],
+    }, index=[TOPIC_LABELS[t] for t in TOPICS])
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+    ax = axes[0]
+    im = ax.imshow(df_loyo.values, cmap="RdYlGn", vmin=0, vmax=100, aspect="auto")
+    ax.set_xticks(range(len(df_loyo.columns)))
+    ax.set_xticklabels(df_loyo.columns, fontsize=10)
+    ax.set_yticks(range(len(df_loyo.index)))
+    ax.set_yticklabels(df_loyo.index, fontsize=10)
+    for i in range(len(df_loyo.index)):
+        for j in range(len(df_loyo.columns)):
+            val = df_loyo.values[i, j]
+            ax.text(j, i, f"{val:.0f}%", ha="center", va="center",
+                    fontsize=12, fontweight="bold",
+                    color="black" if 20 < val < 80 else "white")
+    plt.colorbar(im, ax=ax, label="% folds sig. (p < 0.05)")
+    ax.set_title("LOYO — % saisons significatives", fontsize=10)
+
+    ax2 = axes[1]
+    im2 = ax2.imshow(pval_data.values, cmap="RdYlGn_r", vmin=0, vmax=0.5, aspect="auto")
+    ax2.set_xticks(range(len(pval_data.columns)))
+    ax2.set_xticklabels(pval_data.columns, fontsize=10)
+    ax2.set_yticks(range(len(pval_data.index)))
+    ax2.set_yticklabels(pval_data.index, fontsize=10)
+    for i in range(len(pval_data.index)):
+        for j in range(len(pval_data.columns)):
+            val = pval_data.values[i, j]
+            sig = " ✓" if val < GC_ALPHA else ""
+            ax2.text(j, i, f"{val:.3f}{sig}", ha="center", va="center",
+                     fontsize=11, fontweight="bold",
+                     color="white" if val < 0.1 else "black")
+    plt.colorbar(im2, ax=ax2, label="p-value globale")
+    ax2.set_title("P-values GLOBALES (sans LOYO)\n✓ = sig. (p < 0.05)", fontsize=10)
+
+    plt.suptitle(
+        "Récapitulatif — Granger Linéaire (lags asymétriques, AIC 2D)",
+        fontsize=12,
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "grangerlineaire_3105_summary_heatmap.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+# ─────────────────────────────────────────────
+# 10. MAIN
+# ─────────────────────────────────────────────
+def main() -> None:
+    dfs_by_topic   = {}
+    lags_by_topic  = {}
+    loyo_by_topic  = {}
+    global_results = []
+
+    for topic in TOPICS:
+        print(f"\n{'=' * 55}")
+        print(f"  {TOPIC_LABELS[topic]}  ({topic})")
+        print(f"{'=' * 55}")
+
+        df = load_series(topic, DATA_DIR)
+        print(f"  {len(df)} obs — {df.index.min().date()} → {df.index.max().date()}")
+        print(f"  GT : min={df['gt'].min():.1f}  max={df['gt'].max():.1f}  "
+              f"mean={df['gt'].mean():.1f}  std={df['gt'].std():.1f}")
+        print(f"  MC : min={df['mc'].min():.1f}  max={df['mc'].max():.1f}  "
+              f"mean={df['mc'].mean():.1f}  std={df['mc'].std():.1f}")
+        dfs_by_topic[topic] = df
+
+        # ── Sélection AIC 2D ────────────────────────────────────────────
+        print("  [Sélection AIC 2D]")
+        lags = {}
+        for effect, cause in [("mc", "gt"), ("gt", "mc")]:
+            p1, p2, aic_grid = select_lags_aic_2d(df, effect, cause, MAX_LAG)
+            lags[(effect, cause)] = (p1, p2, aic_grid)
+            print(f"    {cause} → {effect} : p1*={p1} (lags effet), p2*={p2} (lags cause)")
+        lags_by_topic[topic] = lags
+
+        # ── P-value globale ──────────────────────────────────────────────
+        print("  [P-value globale]")
+        gres = global_granger(df, topic, lags)
+        global_results.append(gres)
+        for d in ["gt_to_mc", "mc_to_gt"]:
+            sig = "✓" if gres[f"sig_{d}"] else ""
+            print(f"    {d} : F={gres[f'F_{d}']}  pval={gres[f'pval_{d}']}  "
+                  f"R²full={gres[f'r2_full_{d}']}  ΔR²={gres[f'delta_r2_{d}']}  {sig}")
+
+        # ── LOYO ────────────────────────────────────────────────────────
+        print("  [LOYO]")
+        loyo = granger_loyo(df, topic, DATA_DIR, lags, GC_ALPHA)
+        loyo_by_topic[topic] = loyo
+
+        if not loyo.empty:
+            for d in ["gt_to_mc", "mc_to_gt"]:
+                pct      = loyo[f"sig_{d}"].mean() * 100
+                mean_dr2 = loyo[f"delta_r2_{d}"].mean()
+                arrow    = d.replace("_to_", " → ")
+                print(f"    ▶ {arrow} : {pct:.0f}% folds sig.  ΔR² moyen = {mean_dr2:.4f}")
+
+        out_csv = OUTPUT_DIR / f"grangerlineaire_3105_loyo_{topic}.csv"
+        loyo.to_csv(out_csv, index=False)
+        print(f"  → CSV : {out_csv}")
+
+    # ── CSV global ──────────────────────────────────────────────────────
+    df_global = pd.DataFrame(global_results)
+    out_g = OUTPUT_DIR / "grangerlineaire_3105_global.csv"
+    df_global.to_csv(out_g, index=False)
+    print(f"\n  → CSV global : {out_g}")
+
+    # ── Graphiques ──────────────────────────────────────────────────────
+    print("\nGénération des graphiques…")
+    plot_aic_heatmaps(lags_by_topic)
+    plot_loyo_pvalues(loyo_by_topic)
+    plot_loyo_r2(loyo_by_topic)
+    plot_global_summary(global_results)
+    plot_normalized_series(dfs_by_topic)
+    plot_summary_heatmap(loyo_by_topic, global_results)
+
+    print("\n✓ Terminé. Fichiers dans :", OUTPUT_DIR)
+    print("  grangerlineaire_3105_aic_heatmaps.png")
+    print("  grangerlineaire_3105_loyo_pvalues.png")
+    print("  grangerlineaire_3105_loyo_r2_gt_to_mc.png")
+    print("  grangerlineaire_3105_loyo_r2_mc_to_gt.png")
+    print("  grangerlineaire_3105_global_summary.png")
+    print("  grangerlineaire_3105_normalized_series.png")
+    print("  grangerlineaire_3105_summary_heatmap.png")
+    print("  grangerlineaire_3105_global.csv")
+    print("  grangerlineaire_3105_loyo_{topic}.csv  (×4)")
+
+
+if __name__ == "__main__":
+    main()
