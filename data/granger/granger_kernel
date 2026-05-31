@@ -1,0 +1,753 @@
+#GRANGER NON-LINÉAIRE KERNEL BASED + PERMUTATION
+"""
+Granger Causality Analysis — MediaCloud + Google Trends
+- Version kernel-based (RBF)
+- Méthode : comparaison des erreurs OOS (KRR), test de permutation sur X_cause
+- Leave-one-year-out (LOYO)
+- Dry January : données à partir du 01/01/2019 seulement
+
+v4 — LAGS ASYMÉTRIQUES + P-VALUE GLOBALE + GOF :
+  - Lags asymétriques (p*, q*) : p lags pour l'effet, q lags pour la cause
+  - Sélection par grille CV-MSE 2D sur [1..MAX_LAG]²
+  - Hyperparamètres RBF figés au (p*, q*) optimal pour toutes les permutations
+  - P-value globale (sans LOYO) sur split OOS 80/20
+  - Indicateurs goodness of fit : R²_OOS, ΔR²_OOS, T_obs
+"""
+
+import os
+import warnings
+from itertools import product as iterproduct
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
+from sklearn.preprocessing import StandardScaler
+
+warnings.filterwarnings("ignore")
+
+# ─────────────────────────────────────────────
+# CONFIG
+# ─────────────────────────────────────────────
+DATA_DIR   = "/Users/r/Documents/CS/projet_S8/data/google_trends/2904/GRANGER/VRAIES_DATA_JOURNALIERES_GRANGER"
+OUTPUT_DIR = Path(DATA_DIR).parent / "results_kernel_v4"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+MAX_LAG        = 10
+GC_ALPHA       = 0.05
+N_PERMUTATIONS = 499
+TOPICS         = ["DJ", "MB", "Mov", "OR"]
+TOPIC_LABELS   = {
+    "DJ":  "Dry January",
+    "MB":  "Mars Bleu",
+    "Mov": "Movember",
+    "OR":  "Octobre Rose",
+}
+
+DJ_START_DATE = "2019-01-01"
+
+KRR_PARAM_GRID = {
+    "alpha": [0.01, 0.1, 1.0, 10.0],
+    "gamma": [0.001, 0.01, 0.1, 1.0],
+}
+
+
+# ─────────────────────────────────────────────
+# 1. CHARGEMENT
+# ─────────────────────────────────────────────
+def load_series(topic: str, data_dir: str) -> pd.DataFrame:
+    gt_path = os.path.join(data_dir, f"GT_{topic}_Granger.csv")
+    mc_path = os.path.join(data_dir, f"MC_{topic}_Granger_normalized.csv")
+
+    gt = (pd.read_csv(gt_path, parse_dates=["date"])
+            .set_index("date").sort_index()[["campaign_index"]]
+            .rename(columns={"campaign_index": "gt"}))
+
+    mc = (pd.read_csv(mc_path, parse_dates=["date"])
+            .set_index("date").sort_index()[["n_articles"]]
+            .rename(columns={"n_articles": "mc"}))
+
+    df = gt.join(mc, how="inner")
+
+    if topic == "DJ":
+        before = len(df)
+        df = df.loc[df.index >= DJ_START_DATE]
+        after = len(df)
+        print(f"  [DJ] Filtre >= {DJ_START_DATE} : {before} → {after} obs "
+              f"({before - after} lignes supprimées, années 2015-2018 exclues)")
+
+    print(f"  Colonnes : {df.columns.tolist()}")
+    print(f"  Premières lignes :\n{df.head(3).to_string()}")
+    return df
+
+
+# ─────────────────────────────────────────────
+# 2. CONSTRUCTION DES MATRICES DE LAG ASYMÉTRIQUES
+#
+#  Modèle réduit  : X_red  = [y_{t-1}, …, y_{t-p}]          dim p
+#  Modèle complet : X_full = [y_{t-1}, …, y_{t-p},
+#                              z_{t-1}, …, z_{t-q}]          dim p+q
+#
+#  start = max(p, q) pour aligner les deux matrices sur
+#  la même fenêtre temporelle et garder y identique.
+# ─────────────────────────────────────────────
+def build_lag_matrix_asym(
+    series: pd.DataFrame,
+    effect: str,
+    cause: str,
+    p: int,
+    q: int,
+):
+    """
+    Retourne :
+      X_reduced  : (T-start, p)    — lags de effect uniquement
+      X_full     : (T-start, p+q)  — lags effect || lags cause
+      y          : (T-start,)
+      q          : nb de colonnes cause dans X_full (colonnes p..p+q-1)
+    """
+    df    = series[[effect, cause]].dropna()
+    T     = len(df)
+    start = max(p, q)
+
+    rows_eff, rows_cau, y_list = [], [], []
+    for t in range(start, T):
+        y_list.append(df[effect].iloc[t])
+        rows_eff.append(df[effect].iloc[t - p:t].values[::-1])
+        rows_cau.append(df[cause].iloc[t - q:t].values[::-1])
+
+    y         = np.array(y_list)
+    X_reduced = np.array(rows_eff)
+    X_cause   = np.array(rows_cau)
+    X_full    = np.hstack([X_reduced, X_cause])
+
+    return X_reduced, X_full, y, q   # n_cause_cols = q
+
+
+# ─────────────────────────────────────────────
+# 3. SÉLECTION DU LAG PAR GRILLE CV-MSE 2D
+#
+#  Grille [1..MAX_LAG]² — minimise CV-MSE du modèle complet
+#  avec GridSearchCV sur les hyperparamètres RBF.
+#  Retourne (p*, q*), cv_grid (dict (p,q)->mse), best_params_full.
+# ─────────────────────────────────────────────
+def select_lag_cv_2d(
+    series: pd.DataFrame,
+    effect: str,
+    cause: str,
+    max_lag: int,
+) -> tuple:
+    tscv       = TimeSeriesSplit(n_splits=3)
+    cv_grid    = {}
+    best_score = np.inf
+    best_p, best_q = 1, 1
+    best_params_full = None
+
+    total = max_lag * max_lag
+    done  = 0
+    print(f"  Grille CV 2D ({max_lag}×{max_lag}) en cours…")
+
+    for p, q in iterproduct(range(1, max_lag + 1), range(1, max_lag + 1)):
+        done += 1
+        try:
+            _, X_full, y, _ = build_lag_matrix_asym(series, effect, cause, p, q)
+            if len(y) < 20:
+                continue
+
+            scaler   = StandardScaler()
+            X_scaled = scaler.fit_transform(X_full)
+
+            gs = GridSearchCV(
+                KernelRidge(kernel="rbf"),
+                KRR_PARAM_GRID,
+                cv=tscv,
+                scoring="neg_mean_squared_error",
+                n_jobs=-1,
+            )
+            gs.fit(X_scaled, y)
+            score           = -gs.best_score_
+            cv_grid[(p, q)] = score
+
+            if score < best_score:
+                best_score       = score
+                best_p, best_q   = p, q
+                best_params_full = gs.best_params_
+
+        except Exception:
+            continue
+
+        if done % 20 == 0:
+            print(f"    {done}/{total} cellules traitées…")
+
+    print(f"  → p* = {best_p}, q* = {best_q}  (CV-MSE = {best_score:.4f})")
+    return best_p, best_q, cv_grid, best_params_full
+
+
+# ─────────────────────────────────────────────
+# 3b. Sélection du lag p pour le modèle réduit (1D, effet seul)
+#     Utilisée pour figer best_params_red.
+# ─────────────────────────────────────────────
+def select_lag_reduced(
+    series: pd.DataFrame,
+    effect: str,
+    p_star: int,
+) -> dict:
+    """Fige les hyperparamètres du modèle réduit pour p = p*."""
+    tscv = TimeSeriesSplit(n_splits=3)
+    try:
+        _, X_full, y, _ = build_lag_matrix_asym(series, effect, effect, p_star, p_star)
+        # On ne garde que les colonnes effet (X_reduced) en utilisant le wrapper simplifié
+        X_red, _, y, _ = build_lag_matrix_asym(series, effect, effect, p_star, p_star)
+        # build_lag_matrix_asym avec cause=effect → X_full = [eff|eff] ; on prend juste X_red
+        X_red_only = X_red   # shape (n, p_star)
+        if len(y) < 20:
+            return {"alpha": 1.0, "gamma": 0.1}
+
+        scaler   = StandardScaler()
+        X_scaled = scaler.fit_transform(X_red_only)
+        gs = GridSearchCV(
+            KernelRidge(kernel="rbf"),
+            KRR_PARAM_GRID,
+            cv=tscv,
+            scoring="neg_mean_squared_error",
+            n_jobs=-1,
+        )
+        gs.fit(X_scaled, y)
+        return gs.best_params_
+    except Exception:
+        return {"alpha": 1.0, "gamma": 0.1}
+
+
+# ─────────────────────────────────────────────
+# 4. CALCUL DES INDICATEURS GOF SUR UN SPLIT DONNÉ
+# ─────────────────────────────────────────────
+def compute_gof(y_te, pred_red, pred_full):
+    """
+    Retourne un dict avec :
+      mse_red, mse_full, T_obs,
+      r2_oos_red, r2_oos_full, delta_r2_oos
+    """
+    var_y = np.var(y_te)
+    mse_red  = np.mean((y_te - pred_red)  ** 2)
+    mse_full = np.mean((y_te - pred_full) ** 2)
+    T_obs    = mse_red - mse_full
+
+    r2_red  = 1 - mse_red  / var_y if var_y > 0 else np.nan
+    r2_full = 1 - mse_full / var_y if var_y > 0 else np.nan
+    delta_r2 = r2_full - r2_red
+
+    return {
+        "mse_red"     : mse_red,
+        "mse_full"    : mse_full,
+        "T_obs"       : T_obs,
+        "r2_oos_red"  : r2_red,
+        "r2_oos_full" : r2_full,
+        "delta_r2_oos": delta_r2,
+    }
+
+
+# ─────────────────────────────────────────────
+# 5. TEST DE GRANGER KERNEL v4
+#
+#  Hyperparamètres figés (params_red, params_full) passés en argument.
+#  Retourne (pval, gof_dict).
+# ─────────────────────────────────────────────
+def kernel_granger_test(
+    series: pd.DataFrame,
+    cause: str,
+    effect: str,
+    p: int,
+    q: int,
+    params_red: dict,
+    params_full: dict,
+    n_perm: int = N_PERMUTATIONS,
+    rng: np.random.Generator = None,
+) -> tuple:
+    if rng is None:
+        rng = np.random.default_rng(42)
+
+    X_red, X_full, y, n_cause = build_lag_matrix_asym(series, effect, cause, p, q)
+    n = len(y)
+
+    if n < max(20, (p + q) * 2):
+        return np.nan, {}
+
+    # ── Split temporel 80 / 20 ───────────────────────────────────────────
+    split = int(n * 0.8)
+    if n - split < 5:
+        return np.nan, {}
+
+    X_red_tr,  X_red_te  = X_red[:split],  X_red[split:]
+    X_full_tr, X_full_te = X_full[:split], X_full[split:]
+    y_tr,      y_te      = y[:split],      y[split:]
+
+    # ── Scalers fités sur train uniquement ───────────────────────────────
+    sc_red  = StandardScaler().fit(X_red_tr)
+    sc_full = StandardScaler().fit(X_full_tr)
+
+    X_red_tr_s  = sc_red.transform(X_red_tr)
+    X_red_te_s  = sc_red.transform(X_red_te)
+    X_full_tr_s = sc_full.transform(X_full_tr)
+    X_full_te_s = sc_full.transform(X_full_te)
+
+    # ── Modèles avec hyperparamètres figés ───────────────────────────────
+    model_red  = KernelRidge(kernel="rbf", **params_red).fit(X_red_tr_s,  y_tr)
+    model_full = KernelRidge(kernel="rbf", **params_full).fit(X_full_tr_s, y_tr)
+
+    pred_red  = model_red.predict(X_red_te_s)
+    pred_full = model_full.predict(X_full_te_s)
+
+    # ── GOF ──────────────────────────────────────────────────────────────
+    gof = compute_gof(y_te, pred_red, pred_full)
+    T_obs = gof["T_obs"]
+
+    # ── Test de permutation : on permute les colonnes CAUSE ───────────────
+    # X_full = [cols_effect (0..p-1) | cols_cause (p..p+q-1)]
+    count = 0
+
+    for _ in range(n_perm):
+        X_full_tr_perm = X_full_tr_s.copy()
+        X_full_te_perm = X_full_te_s.copy()
+
+        for col in range(p, p + q):
+            X_full_tr_perm[:, col] = rng.permutation(X_full_tr_s[:, col])
+            X_full_te_perm[:, col] = rng.permutation(X_full_te_s[:, col])
+
+        model_perm = KernelRidge(kernel="rbf", **params_full)
+        model_perm.fit(X_full_tr_perm, y_tr)
+
+        pred_perm    = model_perm.predict(X_full_te_perm)
+        mse_full_perm = np.mean((y_te - pred_perm) ** 2)
+        T_perm = gof["mse_red"] - mse_full_perm
+
+        if T_perm >= T_obs:
+            count += 1
+
+    pval = (count + 1) / (n_perm + 1)
+    return pval, gof
+
+
+# ─────────────────────────────────────────────
+# 6. P-VALUE GLOBALE (sans LOYO)
+# ─────────────────────────────────────────────
+def compute_global_pvalue(
+    df: pd.DataFrame,
+    topic: str,
+    p_star: int,
+    q_star: int,
+    params_red: dict,
+    params_full: dict,
+    alpha: float = GC_ALPHA,
+) -> pd.DataFrame:
+    """
+    Test sur toutes les données disponibles, split OOS 80/20.
+    Retourne un DataFrame à 2 lignes (gt→mc et mc→gt).
+    """
+    rows = []
+    rng  = np.random.default_rng(0)
+
+    for cause, effect in [("gt", "mc"), ("mc", "gt")]:
+        print(f"    Global | {cause} → {effect} ...", end=" ", flush=True)
+        pval, gof = kernel_granger_test(
+            df, cause, effect, p_star, q_star,
+            params_red, params_full, rng=rng,
+        )
+        print(f"p = {pval:.3f}" if not np.isnan(pval) else "NaN")
+
+        rows.append({
+            "direction"   : f"{cause} → {effect}",
+            "p_star"      : p_star,
+            "q_star"      : q_star,
+            "pval"        : pval,
+            "significant" : False if np.isnan(pval) else pval < alpha,
+            **{k: round(v, 6) if not np.isnan(v) else np.nan
+               for k, v in gof.items()},
+        })
+
+    return pd.DataFrame(rows)
+
+
+# ─────────────────────────────────────────────
+# 7. FOLD KEYS
+# ─────────────────────────────────────────────
+def get_fold_key(df: pd.DataFrame, topic: str, gt_path: str) -> pd.Series:
+    if topic == "DJ":
+        gt_meta = (pd.read_csv(gt_path, parse_dates=["date"])
+                     .set_index("date").sort_index()[["season"]])
+        return df.join(gt_meta, how="left")["season"]
+    return pd.Series(df.index.year, index=df.index, name="year")
+
+
+# ─────────────────────────────────────────────
+# 8. GRANGER KERNEL LOYO v4
+# ─────────────────────────────────────────────
+def granger_kernel_loyo(
+    df: pd.DataFrame,
+    topic: str,
+    gt_path: str,
+    max_lag: int = MAX_LAG,
+    alpha: float = GC_ALPHA,
+) -> tuple:
+    fold_keys = get_fold_key(df, topic, gt_path)
+    seasons   = sorted(fold_keys.dropna().unique())
+    rows      = []
+    rng       = np.random.default_rng(42)
+
+    # ── Sélection (p*, q*) une seule fois sur toutes les données ─────────
+    # Directions gt→mc et mc→gt peuvent avoir des (p*, q*) différents.
+    # On choisit la direction gt→mc pour fixer les lags (convention).
+    # Alternatively, on pourrait faire la grille pour chaque direction.
+    # Ici, on fait une grille par direction pour être rigoureux.
+    print("  Sélection (p*, q*) direction GT → MC …")
+    p_gt2mc, q_gt2mc, cv_grid_gt2mc, params_full_gt2mc = select_lag_cv_2d(
+        df, "gt", "mc", max_lag
+    )
+    params_red_gt2mc = select_lag_reduced(df, "gt", p_gt2mc)
+
+    print("  Sélection (p*, q*) direction MC → GT …")
+    p_mc2gt, q_mc2gt, cv_grid_mc2gt, params_full_mc2gt = select_lag_cv_2d(
+        df, "mc", "gt", max_lag
+    )
+    params_red_mc2gt = select_lag_reduced(df, "mc", p_mc2gt)
+
+    print(f"  GT→MC : p*={p_gt2mc}, q*={q_gt2mc}")
+    print(f"  MC→GT : p*={p_mc2gt}, q*={q_mc2gt}")
+
+    # ── P-value globale ───────────────────────────────────────────────────
+    print("  Calcul p-value globale …")
+    df_global_gt2mc = compute_global_pvalue(
+        df, topic, p_gt2mc, q_gt2mc, params_red_gt2mc, params_full_gt2mc, alpha
+    )
+    df_global_mc2gt = compute_global_pvalue(
+        df, topic, p_mc2gt, q_mc2gt, params_red_mc2gt, params_full_mc2gt, alpha
+    )
+
+    # ── LOYO ─────────────────────────────────────────────────────────────
+    for held_out in seasons:
+        mask_train = fold_keys != held_out
+        train = df.loc[mask_train, ["gt", "mc"]].dropna()
+
+        min_obs = max((p_gt2mc + q_gt2mc), (p_mc2gt + q_mc2gt)) * 2 + 20
+        if len(train) < min_obs:
+            print(f"  [SKIP] {held_out} : train trop court ({len(train)} obs)")
+            continue
+        if train["gt"].std() < 1e-3 or train["mc"].std() < 1e-3:
+            print(f"  [SKIP] {held_out} : variance quasi-nulle")
+            continue
+
+        result_row = {
+            "held_out" : held_out,
+            "p_gt2mc"  : p_gt2mc,
+            "q_gt2mc"  : q_gt2mc,
+            "p_mc2gt"  : p_mc2gt,
+            "q_mc2gt"  : q_mc2gt,
+            "n_train"  : len(train),
+            "gt_std"   : round(train["gt"].std(), 3),
+            "mc_std"   : round(train["mc"].std(), 3),
+        }
+
+        # GT → MC
+        print(f"    {held_out} | gt → mc ...", end=" ", flush=True)
+        pval_gt2mc, gof_gt2mc = kernel_granger_test(
+            train, "gt", "mc", p_gt2mc, q_gt2mc,
+            params_red_gt2mc, params_full_gt2mc, rng=rng,
+        )
+        print(f"p = {pval_gt2mc:.3f}" if not np.isnan(pval_gt2mc) else "NaN")
+
+        result_row["pval_gt_to_mc"] = pval_gt2mc
+        result_row["sig_gt_to_mc"]  = False if np.isnan(pval_gt2mc) else pval_gt2mc < alpha
+        for k, v in gof_gt2mc.items():
+            result_row[f"gt2mc_{k}"] = round(v, 6) if not np.isnan(v) else np.nan
+
+        # MC → GT
+        print(f"    {held_out} | mc → gt ...", end=" ", flush=True)
+        pval_mc2gt, gof_mc2gt = kernel_granger_test(
+            train, "mc", "gt", p_mc2gt, q_mc2gt,
+            params_red_mc2gt, params_full_mc2gt, rng=rng,
+        )
+        print(f"p = {pval_mc2gt:.3f}" if not np.isnan(pval_mc2gt) else "NaN")
+
+        result_row["pval_mc_to_gt"] = pval_mc2gt
+        result_row["sig_mc_to_gt"]  = False if np.isnan(pval_mc2gt) else pval_mc2gt < alpha
+        for k, v in gof_mc2gt.items():
+            result_row[f"mc2gt_{k}"] = round(v, 6) if not np.isnan(v) else np.nan
+
+        rows.append(result_row)
+
+    return (
+        pd.DataFrame(rows),
+        {"gt2mc": (p_gt2mc, q_gt2mc), "mc2gt": (p_mc2gt, q_mc2gt)},
+        {"gt2mc": cv_grid_gt2mc, "mc2gt": cv_grid_mc2gt},
+        df_global_gt2mc,
+        df_global_mc2gt,
+    )
+
+
+# ─────────────────────────────────────────────
+# 9a. Heatmap CV-MSE 2D pour une direction
+# ─────────────────────────────────────────────
+def plot_cv_grid_heatmap(cv_grid: dict, p_star: int, q_star: int,
+                         title: str, out_path: Path):
+    max_p = max(k[0] for k in cv_grid)
+    max_q = max(k[1] for k in cv_grid)
+
+    mat = np.full((max_p, max_q), np.nan)
+    for (p, q), v in cv_grid.items():
+        mat[p - 1, q - 1] = v
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    im = ax.imshow(mat, aspect="auto", origin="lower",
+                   extent=[0.5, max_q + 0.5, 0.5, max_p + 0.5],
+                   cmap="viridis_r")
+    ax.scatter([q_star], [p_star], color="crimson", s=200,
+               marker="*", zorder=5, label=f"(p*, q*) = ({p_star}, {q_star})")
+    plt.colorbar(im, ax=ax, label="CV-MSE")
+    ax.set_xlabel("q (lags cause)")
+    ax.set_ylabel("p (lags effet)")
+    ax.set_title(title, fontsize=10)
+    ax.legend(fontsize=9)
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=150)
+    plt.close()
+    print(f"  → {out_path}")
+
+
+# ─────────────────────────────────────────────
+# 9b. p-values LOYO
+# ─────────────────────────────────────────────
+def plot_loyo_pvalues(loyo_by_topic: dict, pq_opts: dict):
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+    for ax, topic in zip(axes.flatten(), TOPICS):
+        res = loyo_by_topic[topic]
+        if res.empty:
+            ax.set_visible(False)
+            continue
+
+        x      = np.arange(len(res))
+        labels = res["held_out"].astype(str).tolist()
+        pv_gt  = res["pval_gt_to_mc"].values
+        pv_mc  = res["pval_mc_to_gt"].values
+
+        ax.plot(x, pv_gt, marker="o", label="GT → MC",
+                color="steelblue", linewidth=1.5, zorder=3)
+        ax.plot(x, pv_mc, marker="s", label="MC → GT",
+                color="tomato", linewidth=1.5, zorder=3)
+
+        for i, (pg, pm) in enumerate(zip(pv_gt, pv_mc)):
+            if not np.isnan(pg) and pg < GC_ALPHA:
+                ax.scatter(i, pg, color="steelblue", s=120, zorder=5,
+                           edgecolors="navy", linewidths=1.5)
+            if not np.isnan(pm) and pm < GC_ALPHA:
+                ax.scatter(i, pm, color="tomato", s=120, zorder=5,
+                           edgecolors="darkred", linewidths=1.5)
+
+        ax.axhline(GC_ALPHA, color="gray", linestyle="--",
+                   linewidth=1.2, label=f"α = {GC_ALPHA}")
+
+        note  = " (2019+)" if topic == "DJ" else ""
+        pq    = pq_opts.get(topic, {})
+        p1, q1 = pq.get("gt2mc", ("?", "?"))
+        p2, q2 = pq.get("mc2gt", ("?", "?"))
+        pct_gt = res["sig_gt_to_mc"].mean() * 100
+        pct_mc = res["sig_mc_to_gt"].mean() * 100
+        ax.set_title(
+            f"{TOPIC_LABELS[topic]}{note}\n"
+            f"GT→MC : p*={p1}, q*={q1}  |  MC→GT : p*={p2}, q*={q2}\n"
+            f"GT→MC : {pct_gt:.0f}% sig.  |  MC→GT : {pct_mc:.0f}% sig.",
+            fontsize=8
+        )
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
+        ax.set_xlabel("Saison retirée (fold LOYO)")
+        ax.set_ylabel("p-value (permutation colonnes cause — OOS)")
+        ax.set_ylim(-0.02, 1.05)
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+
+    plt.suptitle(
+        "Causalité de Granger KERNEL v4 (RBF) — p-values LOYO\n"
+        "Lags asymétriques (p*, q*) — Permutation colonnes cause (N=499) OOS\n"
+        "Dry January : données à partir de 2019 uniquement",
+        fontsize=12
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "kernel_v4_loyo_pvalues.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+# ─────────────────────────────────────────────
+# 9c. Heatmap récap
+# ─────────────────────────────────────────────
+def plot_summary_heatmap(loyo_by_topic: dict):
+    data = {
+        TOPIC_LABELS[t]: {
+            "GT → MC (% sig.)": round(loyo_by_topic[t]["sig_gt_to_mc"].mean() * 100, 1),
+            "MC → GT (% sig.)": round(loyo_by_topic[t]["sig_mc_to_gt"].mean() * 100, 1),
+        }
+        for t in TOPICS if not loyo_by_topic[t].empty
+    }
+    df_heat = pd.DataFrame(data).T
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+    im = ax.imshow(df_heat.values, cmap="RdYlGn", vmin=0, vmax=100, aspect="auto")
+
+    ax.set_xticks(range(len(df_heat.columns)))
+    ax.set_xticklabels(df_heat.columns, fontsize=10)
+    ax.set_yticks(range(len(df_heat.index)))
+    ax.set_yticklabels(df_heat.index, fontsize=10)
+
+    for i in range(len(df_heat.index)):
+        for j in range(len(df_heat.columns)):
+            val = df_heat.values[i, j]
+            ax.text(j, i, f"{val:.0f}%", ha="center", va="center",
+                    fontsize=12, fontweight="bold",
+                    color="black" if 20 < val < 80 else "white")
+
+    plt.colorbar(im, ax=ax, label="% folds significatifs (p < 0.05)")
+    ax.set_title(
+        "Granger KERNEL v4 — Récapitulatif LOYO\n"
+        "(% saisons où p < 0.05 — Dry January : 2019+)\n"
+        "Lags asymétriques — Permutation colonnes cause — OOS",
+        fontsize=10
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "kernel_v4_summary_heatmap.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+# ─────────────────────────────────────────────
+# 9d. Graphique GOF (ΔR²_OOS et T_obs) par fold LOYO
+# ─────────────────────────────────────────────
+def plot_loyo_gof(loyo_by_topic: dict):
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+    for ax, topic in zip(axes.flatten(), TOPICS):
+        res = loyo_by_topic[topic]
+        if res.empty or "gt2mc_delta_r2_oos" not in res.columns:
+            ax.set_visible(False)
+            continue
+
+        x      = np.arange(len(res))
+        labels = res["held_out"].astype(str).tolist()
+
+        dr2_gt = res["gt2mc_delta_r2_oos"].values
+        dr2_mc = res["mc2gt_delta_r2_oos"].values
+
+        ax.bar(x - 0.2, dr2_gt, width=0.4, label="GT→MC ΔR²_OOS",
+               color="steelblue", alpha=0.75)
+        ax.bar(x + 0.2, dr2_mc, width=0.4, label="MC→GT ΔR²_OOS",
+               color="tomato", alpha=0.75)
+        ax.axhline(0, color="black", linewidth=0.8, linestyle="--")
+
+        note = " (2019+)" if topic == "DJ" else ""
+        ax.set_title(f"{TOPIC_LABELS[topic]}{note}\nΔR²_OOS par fold LOYO", fontsize=9)
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
+        ax.set_xlabel("Saison retirée")
+        ax.set_ylabel("ΔR²_OOS (R²_complet − R²_réduit)")
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+
+    plt.suptitle(
+        "Granger KERNEL v4 — ΔR²_OOS par fold LOYO\n"
+        "Gain de pouvoir prédictif apporté par la cause (R²_complet − R²_réduit)",
+        fontsize=12
+    )
+    plt.tight_layout()
+    out = OUTPUT_DIR / "kernel_v4_loyo_delta_r2.png"
+    plt.savefig(out, dpi=150)
+    plt.close()
+    print(f"  → {out}")
+
+
+# ─────────────────────────────────────────────
+# 10. MAIN
+# ─────────────────────────────────────────────
+def main():
+    loyo_by_topic   = {}
+    pq_opts         = {}
+    cv_grids        = {}
+    global_by_topic = {}
+
+    for topic in TOPICS:
+        print(f"\n{'=' * 60}")
+        print(f"  {TOPIC_LABELS[topic]}  ({topic})")
+        print(f"{'=' * 60}")
+
+        gt_path = os.path.join(DATA_DIR, f"GT_{topic}_Granger.csv")
+        df      = load_series(topic, DATA_DIR)
+        print(f"  {len(df)} obs — {df.index.min().date()} → {df.index.max().date()}")
+        print(f"  GT : std={df['gt'].std():.1f}   MC : std={df['mc'].std():.1f}")
+
+        loyo, pq, grids, df_global_gt2mc, df_global_mc2gt = granger_kernel_loyo(
+            df, topic, gt_path, MAX_LAG, GC_ALPHA
+        )
+
+        loyo_by_topic[topic]   = loyo
+        pq_opts[topic]         = pq
+        cv_grids[topic]        = grids
+        global_by_topic[topic] = pd.concat(
+            [df_global_gt2mc, df_global_mc2gt], ignore_index=True
+        )
+
+        if not loyo.empty:
+            pct_gt = loyo["sig_gt_to_mc"].mean() * 100
+            pct_mc = loyo["sig_mc_to_gt"].mean() * 100
+            print(f"\n  ▶ GT → MC : {pct_gt:.0f}% des folds significatifs")
+            print(f"  ▶ MC → GT : {pct_mc:.0f}% des folds significatifs")
+
+        # CSVs LOYO
+        out_loyo = OUTPUT_DIR / f"kernel_v4_loyo_{topic}.csv"
+        loyo.to_csv(out_loyo, index=False)
+        print(f"  → CSV LOYO : {out_loyo}")
+
+        # CSV global
+        out_global = OUTPUT_DIR / f"kernel_v4_global_{topic}.csv"
+        global_by_topic[topic].to_csv(out_global, index=False)
+        print(f"  → CSV global : {out_global}")
+
+        # Heatmaps CV 2D
+        for direction, (pg, qg) in pq.items():
+            cause, effect = ("gt", "mc") if direction == "gt2mc" else ("mc", "gt")
+            plot_cv_grid_heatmap(
+                grids[direction], pg, qg,
+                title=(f"{TOPIC_LABELS[topic]} — CV-MSE 2D grille (p, q)\n"
+                       f"{cause} → {effect}  |  p*={pg}, q*={qg}"),
+                out_path=OUTPUT_DIR / f"kernel_v4_cv_grid_{topic}_{direction}.png",
+            )
+
+    print("\nGénération des graphiques récapitulatifs…")
+    plot_loyo_pvalues(loyo_by_topic, pq_opts)
+    plot_summary_heatmap(loyo_by_topic)
+    plot_loyo_gof(loyo_by_topic)
+
+    # CSV récap global (tous topics)
+    rows_recap = []
+    for topic in TOPICS:
+        gdf = global_by_topic.get(topic, pd.DataFrame())
+        if gdf.empty:
+            continue
+        for _, row in gdf.iterrows():
+            rows_recap.append({"topic": topic, "label": TOPIC_LABELS[topic], **row})
+    pd.DataFrame(rows_recap).to_csv(
+        OUTPUT_DIR / "kernel_v4_global_all.csv", index=False
+    )
+
+    print("\n✓ Terminé. Fichiers dans :", OUTPUT_DIR)
+    print("  kernel_v4_loyo_{topic}.csv          (×4)")
+    print("  kernel_v4_global_{topic}.csv        (×4)")
+    print("  kernel_v4_global_all.csv")
+    print("  kernel_v4_cv_grid_{topic}_{dir}.png (×8)")
+    print("  kernel_v4_loyo_pvalues.png")
+    print("  kernel_v4_summary_heatmap.png")
+    print("  kernel_v4_loyo_delta_r2.png")
+
+
+if __name__ == "__main__":
+    main()
