@@ -9,7 +9,7 @@ import pandas as pd
 # ----------------------------
 campaign_name = "Dry January"
 campaign_query = "dry january OR mois sans alcool OR arreter de boire OR janvier sans alcool OR arreter alcool"
-MC_API_KEY = "c7632b98c833655afc3269e67027f5a900f369ee"
+MC_API_KEY = os.getenv("MC_API_KEY", "")
 
 # ----------------------------
 # Test window
