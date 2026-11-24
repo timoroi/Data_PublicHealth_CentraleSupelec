@@ -1,0 +1,12 @@
+scope,n_obs,diff_trends,diff_mc,p_mc->trends,lag_mc->trends,p_trends->mc,lag_trends->mc,direction,interpretation
+train (sans 2015),868,par saison,par saison,0.00517,3,0.0027,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2016),867,par saison,par saison,0.00211,4,0.00071,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2017),869,par saison,par saison,0.00655,3,0.00017,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2018),868,par saison,par saison,0.0045,4,8e-05,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2019),868,par saison,par saison,0.00088,4,0.00039,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2020),867,par saison,par saison,0.00426,3,0.00072,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2021),868,par saison,par saison,0.0068,4,0.0001,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2022),869,par saison,par saison,0.00037,4,2e-05,5,BIDIR,BIDIR   (feedback loop)
+train (sans 2023),869,par saison,par saison,4e-05,4,0.0064,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2024),868,par saison,par saison,0.00137,5,0.0,7,BIDIR,BIDIR   (feedback loop)
+train (sans 2025),869,par saison,par saison,0.02406,3,4e-05,7,BIDIR,BIDIR   (feedback loop)

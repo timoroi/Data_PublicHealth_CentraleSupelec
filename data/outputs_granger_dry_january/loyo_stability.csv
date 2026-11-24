@@ -1,0 +1,12 @@
+left_out_season,n_train_seasons,n_train_obs,n_test_obs,direction_all,direction_train,direction_test,train_p_mc->gt,train_lag_mc->gt,train_p_gt->mc,train_lag_gt->mc,test_p_mc->gt,test_lag_mc->gt,test_p_gt->mc,test_lag_gt->mc,train_test_agree,influential,train_interpretation,test_interpretation
+2015-2016,10,417,42,GT->MC,GT->MC,NONE,0.47074,1,0.00575,5,0.63975,1,0.39318,4,False,False,GT->MC  (attention précède la couverture),NONE    (aucune causalité significative)
+2016-2017,10,416,43,GT->MC,GT->MC,GT->MC,0.60436,1,0.00315,5,0.18335,1,0.00036,1,True,False,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)
+2017-2018,10,418,41,GT->MC,GT->MC,GT->MC,0.57889,1,0.00028,7,0.19794,1,0.01382,5,True,False,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)
+2018-2019,10,418,41,GT->MC,GT->MC,NONE,0.51153,1,0.0098,5,0.23268,2,0.13113,7,False,False,GT->MC  (attention précède la couverture),NONE    (aucune causalité significative)
+2019-2020,10,417,42,GT->MC,GT->MC,BIDIR,0.62084,1,0.00628,3,0.01135,7,0.00011,1,False,False,GT->MC  (attention précède la couverture),BIDIR   (feedback loop)
+2020-2021,10,417,42,GT->MC,GT->MC,NONE,0.46004,1,0.00905,5,0.2537,4,0.05347,5,False,False,GT->MC  (attention précède la couverture),NONE    (aucune causalité significative)
+2021-2022,10,417,42,GT->MC,GT->MC,GT->MC,0.59496,1,0.02763,5,0.0912,6,0.0,3,True,False,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)
+2022-2023,10,418,41,GT->MC,GT->MC,BIDIR,0.80334,7,4e-05,6,0.0,5,0.0,7,False,False,GT->MC  (attention précède la couverture),BIDIR   (feedback loop)
+2023-2024,10,418,41,GT->MC,NONE,BIDIR,0.07254,1,0.55179,1,0.00095,6,0.0,5,False,True,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2024-2025,10,417,42,GT->MC,GT->MC,BIDIR,0.59961,1,0.0006,5,0.03089,1,0.0,1,False,False,GT->MC  (attention précède la couverture),BIDIR   (feedback loop)
+2025-2026,10,417,42,GT->MC,GT->MC,GT->MC,0.4679,1,0.00829,5,0.41983,3,0.02171,1,True,False,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)

@@ -1,0 +1,13 @@
+scope,n_obs,diff_trends,diff_mc,p_mc->trends,lag_mc->trends,p_trends->mc,lag_trends->mc,interpretation
+saison 2015-2016,42,0,1,0.54304,3,0.12676,1,Aucune causalité de Granger significative dans un sens ou dans l'autre.
+saison 2016-2017,43,0,0,0.18335,1,0.00036,1,Google Trends Granger-cause Mediacloud (l'attention précède la couverture).
+saison 2017-2018,41,2,0,0.01886,1,0.016,3,Causalité bidirectionnelle (feedback loop).
+saison 2018-2019,41,2,0,7e-05,2,0.17896,7,Mediacloud Granger-cause Google Trends (les médias précèdent l'attention).
+saison 2019-2020,42,1,0,0.0148,7,0.18435,3,Mediacloud Granger-cause Google Trends (les médias précèdent l'attention).
+saison 2020-2021,42,1,1,0.2537,4,0.05347,5,Aucune causalité de Granger significative dans un sens ou dans l'autre.
+saison 2021-2022,42,1,0,0.14417,6,0.0,2,Google Trends Granger-cause Mediacloud (l'attention précède la couverture).
+saison 2022-2023,41,0,2,0.00343,6,0.0,4,Causalité bidirectionnelle (feedback loop).
+saison 2023-2024,41,2,1,0.00021,3,0.0,3,Causalité bidirectionnelle (feedback loop).
+saison 2024-2025,42,1,1,0.03089,1,0.0,1,Causalité bidirectionnelle (feedback loop).
+saison 2025-2026,42,1,1,0.41983,3,0.02171,1,Google Trends Granger-cause Mediacloud (l'attention précède la couverture).
+toutes saisons (pooled),459,par saison,par saison,0.47422,1,0.00597,5,Google Trends Granger-cause Mediacloud (l'attention précède la couverture).

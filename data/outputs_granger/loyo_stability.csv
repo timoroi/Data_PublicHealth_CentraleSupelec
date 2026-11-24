@@ -1,0 +1,12 @@
+left_out_season,n_train_seasons,n_train_obs,n_test_obs,direction_all,direction_train,direction_test,train_p_mc->gt,train_lag_mc->gt,train_p_gt->mc,train_lag_gt->mc,test_p_mc->gt,test_lag_mc->gt,test_p_gt->mc,test_lag_gt->mc,train_test_agree,influential,train_interpretation,test_interpretation
+2015_2016,10,894,90,NONE,NONE,MC->GT,0.41193,1,0.06347,7,0.03782,7,0.0824,1,False,False,NONE    (aucune causalité significative),MC->GT  (médias précèdent l'attention)
+2016_2017,10,895,89,NONE,NONE,BIDIR,0.14522,5,0.13138,3,0.00173,4,0.00137,4,False,False,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2017_2018,10,895,89,NONE,GT->MC,GT->MC,0.10706,7,0.00323,5,0.4086,5,0.0185,1,True,True,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)
+2018_2019,10,894,90,NONE,NONE,GT->MC,0.34891,4,0.20945,3,0.06837,3,0.04419,5,False,False,NONE    (aucune causalité significative),GT->MC  (attention précède la couverture)
+2019_2020,10,894,90,NONE,GT->MC,GT->MC,0.55284,5,0.02552,7,0.23432,4,0.01892,6,True,True,GT->MC  (attention précède la couverture),GT->MC  (attention précède la couverture)
+2020_2021,10,894,90,NONE,NONE,BIDIR,0.38373,2,0.05154,5,0.00105,2,0.00573,6,False,False,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2021_2022,10,895,89,NONE,NONE,BIDIR,0.6666,6,0.05567,7,0.04195,7,0.00322,7,False,False,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2022_2023,10,895,89,NONE,NONE,GT->MC,0.44976,4,0.15271,3,0.12535,7,0.00092,7,False,False,NONE    (aucune causalité significative),GT->MC  (attention précède la couverture)
+2023_2024,10,895,89,NONE,NONE,BIDIR,0.40441,6,0.1165,3,0.0119,1,0.02338,5,False,False,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2024_2025,10,895,89,NONE,NONE,BIDIR,0.61456,1,0.09306,7,0.0,7,0.00787,3,False,False,NONE    (aucune causalité significative),BIDIR   (feedback loop)
+2025_2026,10,894,90,NONE,NONE,GT->MC,0.4701,1,0.20242,7,0.28813,2,0.00043,7,False,False,NONE    (aucune causalité significative),GT->MC  (attention précède la couverture)

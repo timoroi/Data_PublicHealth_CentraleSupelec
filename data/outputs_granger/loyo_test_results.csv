@@ -1,0 +1,12 @@
+scope,n_obs,diff_trends,diff_mc,p_mc->trends,lag_mc->trends,p_trends->mc,lag_trends->mc,direction,interpretation
+test (2015_2016),90,1,1,0.03782,7,0.0824,1,MC->GT,MC->GT  (médias précèdent l'attention)
+test (2016_2017),89,2,1,0.00173,4,0.00137,4,BIDIR,BIDIR   (feedback loop)
+test (2017_2018),89,2,0,0.4086,5,0.0185,1,GT->MC,GT->MC  (attention précède la couverture)
+test (2018_2019),90,1,1,0.06837,3,0.04419,5,GT->MC,GT->MC  (attention précède la couverture)
+test (2019_2020),90,1,1,0.23432,4,0.01892,6,GT->MC,GT->MC  (attention précède la couverture)
+test (2020_2021),90,0,1,0.00105,2,0.00573,6,BIDIR,BIDIR   (feedback loop)
+test (2021_2022),89,1,2,0.04195,7,0.00322,7,BIDIR,BIDIR   (feedback loop)
+test (2022_2023),89,1,2,0.12535,7,0.00092,7,GT->MC,GT->MC  (attention précède la couverture)
+test (2023_2024),89,1,2,0.0119,1,0.02338,5,BIDIR,BIDIR   (feedback loop)
+test (2024_2025),89,1,2,0.0,7,0.00787,3,BIDIR,BIDIR   (feedback loop)
+test (2025_2026),90,1,1,0.28813,2,0.00043,7,GT->MC,GT->MC  (attention précède la couverture)

@@ -1,0 +1,12 @@
+left_out_season,n_train_seasons,n_train_obs,n_test_obs,direction_all,direction_train,direction_test,train_p_mc->gt,train_lag_mc->gt,train_p_gt->mc,train_lag_gt->mc,test_p_mc->gt,test_lag_mc->gt,test_p_gt->mc,test_lag_gt->mc,train_test_agree,influential,train_interpretation,test_interpretation
+2015,10,868,87,BIDIR,BIDIR,GT->MC,0.00517,3,0.0027,7,0.10361,4,0.01009,3,False,False,BIDIR   (feedback loop),GT->MC  (attention précède la couverture)
+2016,10,867,88,BIDIR,BIDIR,NONE,0.00211,4,0.00071,7,0.45131,1,0.11278,2,False,False,BIDIR   (feedback loop),NONE    (aucune causalité significative)
+2017,10,869,86,BIDIR,BIDIR,GT->MC,0.00655,3,0.00017,7,0.14115,1,0.01682,1,False,False,BIDIR   (feedback loop),GT->MC  (attention précède la couverture)
+2018,10,868,87,BIDIR,BIDIR,NONE,0.0045,4,8e-05,7,0.30291,2,0.05761,1,False,False,BIDIR   (feedback loop),NONE    (aucune causalité significative)
+2019,10,868,87,BIDIR,BIDIR,NONE,0.00088,4,0.00039,7,0.12823,1,0.08107,7,False,False,BIDIR   (feedback loop),NONE    (aucune causalité significative)
+2020,10,867,88,BIDIR,BIDIR,NONE,0.00426,3,0.00072,7,0.35564,5,0.14042,1,False,False,BIDIR   (feedback loop),NONE    (aucune causalité significative)
+2021,10,868,87,BIDIR,BIDIR,MC->GT,0.0068,4,0.0001,7,0.00076,1,0.08451,4,False,False,BIDIR   (feedback loop),MC->GT  (médias précèdent l'attention)
+2022,10,869,86,BIDIR,BIDIR,BIDIR,0.00037,4,2e-05,5,0.00216,3,0.00013,6,True,False,BIDIR   (feedback loop),BIDIR   (feedback loop)
+2023,10,869,86,BIDIR,BIDIR,BIDIR,4e-05,4,0.0064,7,0.0,5,0.0,3,True,False,BIDIR   (feedback loop),BIDIR   (feedback loop)
+2024,10,868,87,BIDIR,BIDIR,BIDIR,0.00137,5,0.0,7,0.00073,3,0.0105,1,True,False,BIDIR   (feedback loop),BIDIR   (feedback loop)
+2025,10,869,86,BIDIR,BIDIR,BIDIR,0.02406,3,4e-05,7,0.0,2,0.0,4,True,False,BIDIR   (feedback loop),BIDIR   (feedback loop)

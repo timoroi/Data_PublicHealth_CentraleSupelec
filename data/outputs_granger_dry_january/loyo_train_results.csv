@@ -1,0 +1,12 @@
+scope,n_obs,diff_trends,diff_mc,p_mc->trends,lag_mc->trends,p_trends->mc,lag_trends->mc,direction,interpretation
+train (sans 2015-2016),417,par saison,par saison,0.47074,1,0.00575,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2016-2017),416,par saison,par saison,0.60436,1,0.00315,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2017-2018),418,par saison,par saison,0.57889,1,0.00028,7,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2018-2019),418,par saison,par saison,0.51153,1,0.0098,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2019-2020),417,par saison,par saison,0.62084,1,0.00628,3,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2020-2021),417,par saison,par saison,0.46004,1,0.00905,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2021-2022),417,par saison,par saison,0.59496,1,0.02763,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2022-2023),418,par saison,par saison,0.80334,7,4e-05,6,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2023-2024),418,par saison,par saison,0.07254,1,0.55179,1,NONE,NONE    (aucune causalité significative)
+train (sans 2024-2025),417,par saison,par saison,0.59961,1,0.0006,5,GT->MC,GT->MC  (attention précède la couverture)
+train (sans 2025-2026),417,par saison,par saison,0.4679,1,0.00829,5,GT->MC,GT->MC  (attention précède la couverture)
